@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="col-md-9">
+    <div class="well">
+      <div class="panel-heading c-list">
+        <span class="title">Produtos</span>
+        <ul class="pull-right c-controls">
+          <li>
+            <a class="btn btn-success" ng-click="openCreateProductDialog()">Adicionar Produto</a>
+          </li>
+        </ul>
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="input-group c-search">
+            <input type="text" class="form-control" ng-model="productId" id="product-list-search">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click="pesquisarProdutoPorId(productId)">
+                <span class="glyphicon glyphicon-search text-muted"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-row row">
+      <div class="col-xs-6 col-sm-5 col-lg-4" ng-repeat="product in productsList">
+        <div class="thumbnail">
+          <div class="caption">
+            <h4 id="product-name">
+              <a href="#">{{product.nome}}</a>
+            </h4>
+            <h5 id="product-price">
+              <div ng-if="!product.preco">
+                R$ 0,00
+              </div>
+              <div ng-if="product.preco">
+                R$ {{product.preco}}
+              </div>
+            </h5>
+            <h5 id="product-situation">
+              <div ng-if="product.situacao === 1">
+                Disponivel
+              </div>
+              <div ng-if="product.situacao === 2">
+                Em falta
+              </div>
+            </h5>
+            <div class="btn-group" uib-dropdown>
+              <button id="single-button" type="button" class="btn btn-default pull-right" uib-dropdown-toggle>
+                <span class="glyphicon glyphicon-cog"></span><span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <li role="menuitem"><a ng-click="openAtribuirPrecoParaProdutoDialog(product)">Atribuir preço</a></li>
+                <li role="menuitem"><a ng-click="openCriarLoteDialog(product)">Criar lote</a></li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /.caption -->
+        </div>
+        <!-- /.thumbnail -->
+      </div>
+    </div>
+    <!-- /.flex-row  -->
+  </div>
+</div>
