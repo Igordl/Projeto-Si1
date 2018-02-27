@@ -17,7 +17,7 @@
           <div class="input-group c-search">
             <input type="text" class="form-control" ng-model="productId" id="product-list-search">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button" ng-click="pesquisarProdutoPorId(productId)">
+              <button class="btn btn-default" type="button" ng-click="pesquisarProdutoPorNome(productNome)">
                 <span class="glyphicon glyphicon-search text-muted"></span>
               </button>
             </span>
@@ -25,6 +25,30 @@
         </div>
       </div>
     </div>
+    <div class="modal fade product_view" id="buscados">
+	    <div class="modal-dialog">
+	        <div class="modal-content colorModal">
+	            <div class="modal-body">
+	            	<div ng-show="mostraListBusca">
+
+	            		<h3 style="text-align: center">Artistas Procurados</h3>
+						<table class="table table-stried">
+							<tr>
+								<th>
+									<h4>Nome</h4>
+								</th>
+								<th>
+									<h4>Adicionar aos favoritos</h4>
+								</th>
+							</tr>
+							<tr ng-repeat="arts in artistasProcurados">
+								<td><button class="btn" ng-click="mostraArtista(arts)">{{arts.nome}}</button></td>
+								<td><button class="btn" ng-click="addFavoritos(arts)">Adicionar aos favoritos</button></td>
+							</tr>	
+						</table>
+						</div>
+						</div>
+						</div></div></div>
 
     <div class="flex-row row">
       <div class="col-xs-6 col-sm-5 col-lg-4" ng-repeat="product in productsList">

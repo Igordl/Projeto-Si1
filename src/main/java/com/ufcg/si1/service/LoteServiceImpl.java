@@ -68,4 +68,13 @@ public class LoteServiceImpl implements LoteService {
 	public Iterator<Lote> getIterator() {
 		return null;
 	}
+	
+	public void geraRelatorio() {
+		List<Lote> lotes = findAllLotes();
+		String relatorio = null;
+		for (Iterator<Lote> iterator = lotes.iterator(); iterator.hasNext();) {
+			Lote lote = iterator.next();
+			relatorio += lote.toString() + "/n";
+		}
+	}
 }
