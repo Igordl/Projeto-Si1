@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="efApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Estoque Facil</title>
+  <meta name="description" content="Estoque Fácil - SI1 2017.2">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="app/assets/css/main.css">
+  <link rel="stylesheet" href="app/assets/css/animate.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#!/">Estoque Facil</a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#!/">Home</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <p class="lead">Estoque Facil</p>
+        <div class="list-group">
+          <a href="#!/products" class="list-group-menu list-group-item active" id="products-menu-item">
+            Produtos
+          </a>
+          <a href="#!/sales" class="list-group-menu list-group-item" id="sales-menu-item">
+            Vendas
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+          <div ng-view=""></div>
+      </div>
+    </div>
+  </div>
+  <!-- /.container -->
+
+  <div class="container">
+    <hr>
+    <!-- Footer -->
+    <div class="container">
+      </br>
+      <p class="text-muted text-center">&copy; 2018 Estoque Facil</p>
+
+    </div>
+  </div>
+  <!-- /.container -->
+
+
+  <!-- Bower scripts: -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+
+  <!-- Application scripts: -->
+  <script src="app/core/app.js"></script>
+  <script src="app/core/app.routes.js"></script>
+  <script src="app/core/main/mainController.js"></script>
+  <script src="app/core/main/mainService.js"></script>
+    <script src="app/common/constants/constants.js"></script>
+</body>
+</html>

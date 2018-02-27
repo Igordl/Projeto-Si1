@@ -1,19 +1,11 @@
 package com.ufcg.si1.model;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.xml.crypto.Data;
-
 public class Lote {
 
     private long id;
     private Produto produto;
     private int numeroDeItens;
     private String dataDeValidade;
-    private Data dataTest;
 
     public Lote() {
         this.id = 0;
@@ -31,26 +23,6 @@ public class Lote {
         this.produto = produto;
         this.numeroDeItens = numeroDeItens;
         this.dataDeValidade = dataDeValidade;
-    }
-    
-    
-    //implementando a nona user story
-    public void verificaValidade() throws ParseException {
-    	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-    	Date data = new Date(format.parse(dataDeValidade).getTime());
-    	Date dataAtual = new Date(format.parse(getDateTime()).getTime());
-    	if(data.after(dataAtual)) {
-    		//produto vencido
-    	}
-    	/*else if(data.before(dataAtual)) {
-    		//produto no prazo de validade
-    	}*/
-    }
-    
-    private String getDateTime() {
-    	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    	Date date = new Date();
-    	return dateFormat.format(date);
     }
 
     public long getId() {

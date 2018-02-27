@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.ufcg.si1.model.DTO.LoteDTO;
-import com.ufcg.si1.model.Disponivel;
-import com.ufcg.si1.model.Indisponivel;
 import com.ufcg.si1.model.Lote;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,14 +96,13 @@ public class RestApiController {
 		if (p == null) {
 			return new ResponseEntity(new CustomErrorType("Produto with id " + id + " not found"),
 					HttpStatus.NOT_FOUND);
-		}
+	}
 		return new ResponseEntity<Produto>(p, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateProduto(@PathVariable("id") long id, @RequestBody Produto produto) {
 
-		
 		Produto currentProduto = null;
 
 		for (Produto p : produtoService.findAllProdutos()) {
@@ -171,10 +168,10 @@ public class RestApiController {
 		Lote lote = loteService.saveLote(new Lote(product, loteDTO.getNumeroDeItens(), loteDTO.getDataDeValidade()));
 
 		try {
-			if (product.getSituacao() instanceof Indisponivel) {
+			if (product.getSituacao() == Produto.INDISPONIVEL) {
 				if (loteDTO.getNumeroDeItens() > 0) {
 					Produto produtoDisponivel = product;
-					produtoDisponivel.situacao = new Disponivel();
+					produtoDisponivel.situacao = Produto.DISPONIVEL;
 					produtoService.updateProduto(produtoDisponivel);
 				}
 			}
