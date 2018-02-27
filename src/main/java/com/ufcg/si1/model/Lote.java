@@ -13,7 +13,6 @@ public class Lote {
     private Produto produto;
     private int numeroDeItens;
     private String dataDeValidade;
-    private Data dataTest;
 
     public Lote() {
         this.id = 0;
