@@ -63,9 +63,12 @@ app.controller("SearchProductCtrl", function ($scope, $uibModal, $http, toastr,$
             }
         });
     };
-
+    
     $scope.pesquisarProdutoPorId = function(id) {
         // implementar
+    	// Fazer uma busca pelo produto na lista de produtos 
+    	// e assim retonar um caixinha com a lista de produtos com nome parecido.
+    	
         console.log(id)
         $http.get("http://localhost:8080/api/produto/" + id)
             .then(function successCallback(response) {
