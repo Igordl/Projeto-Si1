@@ -1,0 +1,25 @@
+Reconhecendo Bad Smells
+
+1-  public int situacao; // usa variaveis estaticas abaixo
+	//situacoes do produto 
+	public static final int DISPONIVEL = 1;
+	public static final int INDISPONIVEL = 2;
+	 
+2- public void mudaSituacao(int situacao) throws ObjetoInvalidoException {
+		switch (situacao) {
+		case 1:
+			this.situacao = Produto.DISPONIVEL;
+			break;
+		case 2:
+			this.situacao = Produto.INDISPONIVEL;
+			break;
+
+		default:
+			throw new ObjetoInvalidoException("Situacao Invalida");
+		}
+	}
+
+3- // este metodo nunca eh chamado, mas se precisar estah aqui
+	public int size() {
+		return produtos.size();
+	}
