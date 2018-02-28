@@ -1,6 +1,10 @@
 package com.ufcg.si1.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -16,17 +20,20 @@ public class ProdutoServiceImpl implements ProdutoService {
 	private static final AtomicLong counter = new AtomicLong();
 
 	private static List<Produto> produtos;
-	
+
 	private static List<Lote> lotes;
+
+	private static List<Produto> vencidos;
 
 	static {
 		produtos = populateDummyProdutos();
 		lotes = new ArrayList<>();
+		vencidos = new ArrayList<>();
 	}
 
 	private static List<Produto> populateDummyProdutos() {
 		List<Produto> produtos = new ArrayList<Produto>();
-		
+
 		produtos.add(new Produto(counter.incrementAndGet(), "Leite Integral", "87654321-B", "Parmalat", "Mercearia"));
 		produtos.add(new Produto(counter.incrementAndGet(), "Arroz Integral", "87654322-B", "Tio Joao", "Perecíveis"));
 		produtos.add(new Produto(counter.incrementAndGet(), "Sabao em Po", "87654323-B", "OMO", "Limpeza"));
@@ -89,11 +96,38 @@ public class ProdutoServiceImpl implements ProdutoService {
 		}
 		return false;
 	}
-	
+
 	public Lote saveLote(Lote lote) {
 		lote.setId(counter.incrementAndGet());
 		lotes.add(lote);
 
 		return lote;
 	}
+	
+	// implementando a nona user story
+
+	// comparando a data atual com a data de validade do produto para saber se ta
+	// vencido
+	public void verificaValidade() throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		for (Lote lote : lotes) {
+			Date data = new Date(format.parse(lote.getDataDeValidade()).getTime());
+			Date dataAtual = new Date(format.parse(getDateTime()).getTime());
+			
+			if (data.after(dataAtual)) {
+				// se o produto ta vencido ele passa a ser indisponivel
+				lote.getProduto().setSituacao(lote.getProduto().indisponivel);
+				vencidos.add(lote.getProduto());
+			}
+		}
+		
+	}
+
+	// data atual
+	private String getDateTime() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		return dateFormat.format(date);
+	}
+
 }
