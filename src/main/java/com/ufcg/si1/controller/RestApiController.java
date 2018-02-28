@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.ufcg.si1.model.DTO.LoteDTO;
-import com.ufcg.si1.model.Disponivel;
-import com.ufcg.si1.model.Indisponivel;
+import com.ufcg.si1.model.situacao.Situacao;
+import com.ufcg.si1.model.situacao.Disponivel;
+import com.ufcg.si1.model.situacao.Indisponivel;
 import com.ufcg.si1.model.Lote;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

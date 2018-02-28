@@ -2,6 +2,11 @@ package com.ufcg.si1.model;
 
 import java.math.BigDecimal;
 
+import com.ufcg.si1.model.descontos.Descontos;
+import com.ufcg.si1.model.situacao.Disponivel;
+import com.ufcg.si1.model.situacao.Indisponivel;
+import com.ufcg.si1.model.situacao.Situacao;
+
 import exceptions.ObjetoInvalidoException;
 
 public class Produto {
@@ -12,7 +17,7 @@ public class Produto {
 
 	private BigDecimal preco;
 
-	private float desconto;
+	private boolean temDesconto;
 	
 	private String codigoBarra;
 
@@ -35,7 +40,7 @@ public class Produto {
 		this.id = id;
 		this.nome = nome;
 		this.preco = new BigDecimal(0);
-		this.desconto = desconto;
+		this.temDesconto = true;
 		this.codigoBarra = codigoBarra;
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
@@ -58,14 +63,13 @@ public class Produto {
 		this.preco = preco;
 	}
 	
-	public float getDesconto() {
-		return desconto;
+	public void precoComDesconto(Descontos desconto){
+		if(temDesconto){
+			BigDecimal total = preco.subtract((BigDecimal) desconto);
+			this.setPreco(total);
+		}
 	}
-
-	public void setDesconto(float desconto) {
-		this.desconto = desconto;
-	}
-
+	
 	public long getId() {
 		return id;
 	}
