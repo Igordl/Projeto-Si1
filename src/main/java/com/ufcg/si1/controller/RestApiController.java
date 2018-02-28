@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ufcg.si1.model.Produto;
+import com.ufcg.si1.model.Sale;
 import com.ufcg.si1.service.LoteService;
 import com.ufcg.si1.service.LoteServiceImpl;
 import com.ufcg.si1.service.ProdutoService;
 import com.ufcg.si1.service.ProdutoServiceImpl;
+import com.ufcg.si1.service.SaleService;
+import com.ufcg.si1.service.SaleServiceImpl;
 import com.ufcg.si1.util.CustomErrorType;
 
 import exceptions.ObjetoInvalidoException;
@@ -36,6 +39,7 @@ public class RestApiController {
 
 	ProdutoService produtoService = new ProdutoServiceImpl();
 	LoteService loteService = new LoteServiceImpl();
+	SaleService saleService = new SaleServiceImpl();
 
 	// ------------Retrieve All Products---------------
 
@@ -50,7 +54,7 @@ public class RestApiController {
 		return new ResponseEntity<List<Produto>>(produtos, HttpStatus.OK);
 	}
 
-	// -----------------Criar um Produto----------------
+	// ----------------- Criar um Produto ----------------
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.POST)
 	public ResponseEntity<?> criarProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) {
@@ -195,5 +199,21 @@ public class RestApiController {
 			// You many decide to return HttpStatus.NOT_FOUND
 		}
 		return new ResponseEntity<List<Lote>>(lotes, HttpStatus.OK);
+	}
+	
+	
+	
+	//---------------------- VENDAS ----------------------------------//
+	
+	
+	@RequestMapping(value = "/sale/", method = RequestMethod.GET)
+	public ResponseEntity<List<Sale>> listAllSales() {
+		List<Sale> vendas = saleService.findAllSales();
+
+		if (vendas.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			// You many decide to return HttpStatus.NOT_FOUND
+		}
+		return new ResponseEntity<List<Sale>>(vendas, HttpStatus.OK);
 	}
 }
