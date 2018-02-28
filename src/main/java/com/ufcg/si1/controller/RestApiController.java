@@ -36,8 +36,7 @@ public class RestApiController {
 	ProdutoService produtoService = new ProdutoServiceImpl();
 	LoteService loteService = new LoteServiceImpl();
 
-	// -------------------Retrieve All
-	// Products---------------------------------------------
+	// ------------Retrieve All Products---------------
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.GET)
 	public ResponseEntity<List<Produto>> listAllUsers() {
@@ -50,8 +49,7 @@ public class RestApiController {
 		return new ResponseEntity<List<Produto>>(produtos, HttpStatus.OK);
 	}
 
-	// -------------------Criar um
-	// Produto-------------------------------------------
+	// -----------------Criar um Produto----------------
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.POST)
 	public ResponseEntity<?> criarProduto(@RequestBody Produto produto, UriComponentsBuilder ucBuilder) {
@@ -138,7 +136,9 @@ public class RestApiController {
 		produtoService.updateProduto(currentProduto);
 		return new ResponseEntity<Produto>(currentProduto, HttpStatus.OK);
 	}
-
+	
+	
+	
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
 

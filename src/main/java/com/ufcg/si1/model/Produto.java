@@ -12,6 +12,8 @@ public class Produto {
 
 	private BigDecimal preco;
 
+	private float desconto;
+	
 	private String codigoBarra;
 
 	private String fabricante;
@@ -33,6 +35,7 @@ public class Produto {
 		this.id = id;
 		this.nome = nome;
 		this.preco = new BigDecimal(0);
+		this.desconto = desconto;
 		this.codigoBarra = codigoBarra;
 		this.fabricante = fabricante;
 		this.categoria = nomeCategoria;
@@ -53,6 +56,14 @@ public class Produto {
 
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
+	}
+	
+	public float getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(float desconto) {
+		this.desconto = desconto;
 	}
 
 	public long getId() {
