@@ -60,22 +60,22 @@ public class Product {
 		return name;
 	}
 
-	public void setName(String nome) {
-		this.name = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPreco(BigDecimal preco) {
-		this.price = preco;
+	public void setPreco(BigDecimal price) {
+		this.price = price;
 	}
 	
 	// implementando a sexta user story
-	public void discountPrice(Descontos desconto){
+	public void discountPrice(Descontos discount){
 		if(hasDiscount){
-			BigDecimal total = price.subtract((BigDecimal) desconto);
+			BigDecimal total = price.subtract((BigDecimal) discount);
 			this.setPreco(total);
 		}
 	}
@@ -84,40 +84,40 @@ public class Product {
 		return id;
 	}
 
-	public void setId(long codigo) {
-		this.id = codigo;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getManufacturer() {
 		return manufacturer;
 	}
 
-	public void setManufacturer(String fabricante) {
-		this.manufacturer = fabricante;
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
 	}
 
 	public String getBarcode() {
 		return barcode;
 	}
 
-	public void setBarcode(String codigoBarra) {
-		this.barcode = codigoBarra;
+	public void setBarcode(String barcode) {
+		this.barcode = barcode;
 	}
 
 	public String getCategory() {
 		return this.category;
 	}
 
-	public void setCategory(String categoria) {
-		this.category = categoria;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public Situacao getSituation() throws ObjetoInvalidoException {
 		return this.situation;
 	}
 
-	public void setSituation(Situacao situacao) {
-		this.situation = situacao;
+	public void setSituation(Situacao situacion) {
+		this.situation = situacion;
 	}
 	
 	//houve modificações neste metodo afim de retirar os bad smells
