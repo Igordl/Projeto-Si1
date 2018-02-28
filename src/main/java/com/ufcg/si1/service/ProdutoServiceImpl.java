@@ -37,7 +37,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtos.add(new Produto(counter.incrementAndGet(), "Leite Integral", "87654321-B", "Parmalat", "Mercearia"));
 		produtos.add(new Produto(counter.incrementAndGet(), "Arroz Integral", "87654322-B", "Tio Joao", "Perecíveis"));
 		produtos.add(new Produto(counter.incrementAndGet(), "Sabao em Po", "87654323-B", "OMO", "Limpeza"));
-		produtos.add(new Produto(counter.incrementAndGet(), "Agua Sanitaria", "87654324-C", "Dragao", "limpesa"));
+		produtos.add(new Produto(counter.incrementAndGet(), "Agua Sanitaria", "87654324-C", "Dragao", "limpeza"));
 		produtos.add(new Produto(counter.incrementAndGet(), "Creme Dental", "87654325-C", "Colgate", "HIGIENE"));
 
 		return produtos;
@@ -66,7 +66,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 			}
 		}
 	}
-
+	// reconhecendo bad smells
+	// este metodo nao estava sendo utilizado mas agora utiliza-se ele nas classes Disponiveis e Indisponiveis
+	
 	public int size() {
 		return produtos.size();
 	}

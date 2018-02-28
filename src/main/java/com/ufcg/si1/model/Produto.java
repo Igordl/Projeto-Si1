@@ -28,7 +28,17 @@ public class Produto {
 	public Situacao situacao;
 	
 	public Disponivel disponivel;
+	
 	public Indisponivel indisponivel;
+	
+	// reconhecendo bad smells
+	
+	/*
+	 * public int situacao; // usa variaveis estaticas abaixo
+	 * situacoes do produto 
+	 * public static final int DISPONIVEL = 1;
+	 * public static final int INDISPONIVEL = 2;
+	 */
 
 	public Produto() {
 		this.id = 0;
@@ -63,6 +73,7 @@ public class Produto {
 		this.preco = preco;
 	}
 	
+	// implementando a sexta user story
 	public void precoComDesconto(Descontos desconto){
 		if(temDesconto){
 			BigDecimal total = preco.subtract((BigDecimal) desconto);
@@ -101,14 +112,6 @@ public class Produto {
 	public void mudaCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-		
-	public void mudaSituacao() throws ObjetoInvalidoException {
-		if(disponivel.containsProduto()){
-			this.setSituacao(situacao);
-		}else{
-			throw new ObjetoInvalidoException("Situacao Invalida");
-		}
-	}
 
 	public Situacao getSituacao() throws ObjetoInvalidoException {
 		return this.situacao;
@@ -116,6 +119,16 @@ public class Produto {
 
 	public void setSituacao(Situacao situacao) {
 		this.situacao = situacao;
+	}
+	
+	//houve modificações neste metodo afim de retirar os bad smells
+	// implementando a oitava user story
+	public void mudaSituacao() throws ObjetoInvalidoException {
+		if(disponivel.containsProduto()){
+			this.setSituacao(situacao);
+		}else{
+			throw new ObjetoInvalidoException("Situacao Invalida");
+		}
 	}
 
 	@Override
