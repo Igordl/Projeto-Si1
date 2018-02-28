@@ -3,21 +3,21 @@ package com.ufcg.si1.service;
 import java.util.Iterator;
 import java.util.List;
 
-import com.ufcg.si1.model.Lote;
+import com.ufcg.si1.model.Lot;
 
 public interface LoteService {
 
-	List<Lote> findAllLotes();
+	List<Lot> findAllLotes();
 
-	Lote findById(long id);
+	Lot findById(long id);
 
-	void updateProduto(Lote user);
+	void updateProduto(Lot user);
 
 	void deleteLoteById(long id);
 
 	int size();
 
-	Iterator<Lote> getIterator();
+	Iterator<Lot> getIterator();
 
-	Lote saveLote(Lote lote);
+	Lot saveLote(Lot lote);
 }

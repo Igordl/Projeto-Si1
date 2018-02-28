@@ -1,13 +1,13 @@
 package com.ufcg.si1.model.descontos;
 
 import java.math.BigDecimal;
-import com.ufcg.si1.model.Produto;
+import com.ufcg.si1.model.Product;
 
 public class SuperDesconto implements Descontos {
 	
 	@Override
-	public BigDecimal calculandoDesconto(Produto produto) {
-		BigDecimal preco = produto.getPreco();
+	public BigDecimal calculandoDesconto(Product produto) {
+		BigDecimal preco = produto.getPrice();
 		BigDecimal valor = new BigDecimal(0.50);
 		BigDecimal total = preco.subtract(preco.multiply(valor));
 		return total;

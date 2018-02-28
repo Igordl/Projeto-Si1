@@ -3,23 +3,23 @@ package com.ufcg.si1.service;
 import java.util.Iterator;
 import java.util.List;
 
-import com.ufcg.si1.model.Produto;
+import com.ufcg.si1.model.Product;
 
 public interface ProdutoService {
 
-	List<Produto> findAllProdutos();
+	List<Product> findAllProdutos();
 
-	void saveProduto(Produto produto);
+	void saveProduto(Product produto);
 
-	Produto findById(long id);
+	Product findById(long id);
 
-	void updateProduto(Produto user);
+	void updateProduto(Product user);
 
 	void deleteProdutoById(long id);
 
 	int size();
 
-	Iterator<Produto> getIterator();
+	Iterator<Product> getIterator();
 
-	boolean doesProdutoExist(Produto produto);
+	boolean doesProdutoExist(Product produto);
 }

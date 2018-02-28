@@ -4,14 +4,14 @@ public class ItemSale {
 	
 	private int id;
 	
-	private Produto product;
+	private Product product;
 
 	private int amount;
 
 	private double price;
 	
 	
-	public ItemSale (Produto product, int amount, double price) {
+	public ItemSale (Product product, int amount, double price) {
 		this.product = product;
 		this.amount = amount;
 		this.price = price;
@@ -32,12 +32,12 @@ public class ItemSale {
 	}
 
 
-	public Produto getProduct() {
+	public Product getProduct() {
 		return product;
 	}
 
 
-	public void setProduct(Produto product) {
+	public void setProduct(Product product) {
 		this.product = product;
 	}
 

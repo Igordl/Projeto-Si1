@@ -11,19 +11,19 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Service;
 
-import com.ufcg.si1.model.Lote;
-import com.ufcg.si1.model.Produto;
+import com.ufcg.si1.model.Lot;
+import com.ufcg.si1.model.Product;
 
 @Service("produtoService")
 public class ProdutoServiceImpl implements ProdutoService {
 
 	private static final AtomicLong counter = new AtomicLong();
 
-	private static List<Produto> produtos;
+	private static List<Product> produtos;
 
-	private static List<Lote> lotes;
+	private static List<Lot> lotes;
 
-	private static List<Produto> vencidos;
+	private static List<Product> vencidos;
 
 	static {
 		produtos = populateDummyProdutos();
@@ -31,36 +31,36 @@ public class ProdutoServiceImpl implements ProdutoService {
 		vencidos = new ArrayList<>();
 	}
 
-	private static List<Produto> populateDummyProdutos() {
-		List<Produto> produtos = new ArrayList<Produto>();
+	private static List<Product> populateDummyProdutos() {
+		List<Product> produtos = new ArrayList<Product>();
 
-		produtos.add(new Produto(counter.incrementAndGet(), "Leite Integral", "87654321-B", "Parmalat", "Mercearia"));
-		produtos.add(new Produto(counter.incrementAndGet(), "Arroz Integral", "87654322-B", "Tio Joao", "Perecíveis"));
-		produtos.add(new Produto(counter.incrementAndGet(), "Sabao em Po", "87654323-B", "OMO", "Limpeza"));
-		produtos.add(new Produto(counter.incrementAndGet(), "Agua Sanitaria", "87654324-C", "Dragao", "limpeza"));
-		produtos.add(new Produto(counter.incrementAndGet(), "Creme Dental", "87654325-C", "Colgate", "HIGIENE"));
+		produtos.add(new Product(counter.incrementAndGet(), "Leite Integral", "87654321-B", "Parmalat", "Mercearia"));
+		produtos.add(new Product(counter.incrementAndGet(), "Arroz Integral", "87654322-B", "Tio Joao", "Perecíveis"));
+		produtos.add(new Product(counter.incrementAndGet(), "Sabao em Po", "87654323-B", "OMO", "Limpeza"));
+		produtos.add(new Product(counter.incrementAndGet(), "Agua Sanitaria", "87654324-C", "Dragao", "limpeza"));
+		produtos.add(new Product(counter.incrementAndGet(), "Creme Dental", "87654325-C", "Colgate", "HIGIENE"));
 
 		return produtos;
 	}
 
-	public List<Produto> findAllProdutos() {
+	public List<Product> findAllProdutos() {
 		return produtos;
 	}
 
-	public void saveProduto(Produto produto) {
-		produto.mudaId(counter.incrementAndGet());
+	public void saveProduto(Product produto) {
+		produto.setId(counter.incrementAndGet());
 		produtos.add(produto);
 	}
 
-	public void updateProduto(Produto produto) {
+	public void updateProduto(Product produto) {
 		int index = produtos.indexOf(produto);
 		produtos.set(index, produto);
 	}
 
 	public void deleteProdutoById(long id) {
 
-		for (Iterator<Produto> iterator = produtos.iterator(); iterator.hasNext();) {
-			Produto p = iterator.next();
+		for (Iterator<Product> iterator = produtos.iterator(); iterator.hasNext();) {
+			Product p = iterator.next();
 			if (p.getId() == id) {
 				iterator.remove();
 			}
@@ -73,7 +73,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return produtos.size();
 	}
 
-	public Iterator<Produto> getIterator() {
+	public Iterator<Product> getIterator() {
 		return produtos.iterator();
 	}
 
@@ -81,8 +81,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 		produtos.clear();
 	}
 	
-	public Produto findById(long id) {
-		for (Produto produto : produtos) {
+	public Product findById(long id) {
+		for (Product produto : produtos) {
 			if (produto.getId() == id) {
 				return produto;
 			}
@@ -90,16 +90,16 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return null;
 	}
 
-	public boolean doesProdutoExist(Produto produto) {
-		for (Produto p : produtos) {
-			if (p.getCodigoBarra().equals(produto.getCodigoBarra())) {
+	public boolean doesProdutoExist(Product produto) {
+		for (Product p : produtos) {
+			if (p.getBarcode().equals(produto.getBarcode())) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public Lote saveLote(Lote lote) {
+	public Lot saveLote(Lot lote) {
 		lote.setId(counter.incrementAndGet());
 		lotes.add(lote);
 
@@ -112,14 +112,14 @@ public class ProdutoServiceImpl implements ProdutoService {
 	// vencido
 	public void verificaValidade() throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		for (Lote lote : lotes) {
-			Date data = new Date(format.parse(lote.getDataDeValidade()).getTime());
+		for (Lot lote : lotes) {
+			Date data = new Date(format.parse(lote.getExpirationDate()).getTime());
 			Date dataAtual = new Date(format.parse(getDateTime()).getTime());
 			
 			if (data.after(dataAtual)) {
 				// se o produto ta vencido ele passa a ser indisponivel
-				lote.getProduto().setSituacao(lote.getProduto().indisponivel);
-				vencidos.add(lote.getProduto());
+				lote.getProduct().setSituation(lote.getProduct().unavailable);
+				vencidos.add(lote.getProduct());
 			}
 		}
 		
