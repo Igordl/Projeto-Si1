@@ -37,15 +37,15 @@ import exceptions.ObjetoInvalidoException;
 @CrossOrigin
 public class RestApiController {
 
-	ProductService produtoService = new ProductServiceImpl();
-	LotService loteService = new LotServiceImpl();
+	ProductService productService = new ProductServiceImpl();
+	LotService lotService = new LotServiceImpl();
 	SaleService saleService = new SaleServiceImpl();
 
 	// ------------Retrieve All Products---------------
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> listAllUsers() {
-		List<Product> produtos = produtoService.findAllProducts();
+		List<Product> produtos = productService.findAllProducts();
 
 		if (produtos.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -57,7 +57,7 @@ public class RestApiController {
 	// ----------------- Criar um Produto ----------------
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.POST)
-	public ResponseEntity<?> criarProduto(@RequestBody Product produto, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createProduct(@RequestBody Product produto, UriComponentsBuilder ucBuilder) {
 
 	/*	boolean produtoExiste = false;
 
@@ -68,7 +68,7 @@ public class RestApiController {
 		}
 
 */
-		if (produtoExiste(produto)) {
+		if (productExists(produto)) {
 			return new ResponseEntity(new CustomErrorType("O produto " + produto.getName() + " do fabricante "
 					+ produto.getManufacturer() + " ja esta cadastrado!"), HttpStatus.CONFLICT);
 		}
@@ -80,7 +80,7 @@ public class RestApiController {
 					+ produto.getManufacturer() + " alguma coisa errada aconteceu!"), HttpStatus.NOT_ACCEPTABLE);
 		}
 
-		produtoService.saveProduct(produto);
+		productService.saveProduct(produto);
 
 		// HttpHeaders headers = new HttpHeaders();
 		// headers.setLocation(ucBuilder.path("/api/produto/{id}").buildAndExpand(produto.getId()).toUri());
@@ -89,10 +89,10 @@ public class RestApiController {
 	}
 	
 	//usando o extract method para verificar se o produto existe
-	private boolean produtoExiste(Product produto) {
+	private boolean productExists(Product produto) {
 		boolean produtoExiste = false;
 
-		for (Product p : produtoService.findAllProducts()) {
+		for (Product p : productService.findAllProducts()) {
 			if (p.getBarcode().equals(produto.getBarcode())) {
 				produtoExiste = true;
 			}
@@ -102,9 +102,9 @@ public class RestApiController {
 	
 
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> consultarProduto(@PathVariable("id") long id) {
+	public ResponseEntity<?> checkProduct(@PathVariable("id") long id) {
 		
-		Product p = procuraPeloId(id);
+		Product p = searchById(id);
 		
 		if (p == null) {
 			return new ResponseEntity(new CustomErrorType("Produto with id " + id + " not found"),
@@ -114,9 +114,9 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateProduto(@PathVariable("id") long id, @RequestBody Product produto) {
+	public ResponseEntity<?> updateProduct(@PathVariable("id") long id, @RequestBody Product produto) {
 
-		Product currentProduto = procuraPeloId(id);
+		Product currentProduto = searchById(id);
 
 		if (currentProduto == null) {
 			return new ResponseEntity(new CustomErrorType("Unable to upate. Produto with id " + id + " not found."),
@@ -132,14 +132,14 @@ public class RestApiController {
 		// resolvi criar um servi�o na API s� para mudar a situa��o do produto
 		
 
-		produtoService.updateProduct(currentProduto);
+		productService.updateProduct(currentProduto);
 		return new ResponseEntity<Product>(currentProduto, HttpStatus.OK);
 	}
 	
-	private Product procuraPeloId(long id) {
+	private Product searchById(long id) {
 		Product currentProduto = null;
 
-		for (Product p : produtoService.findAllProducts()) {
+		for (Product p : productService.findAllProducts()) {
 			if (p.getId() == id) {
 				currentProduto = p;
 			}
@@ -151,19 +151,19 @@ public class RestApiController {
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteUser(@PathVariable("id") long id) {
 
-		Product user = procuraPeloId(id);
+		Product user = searchById(id);
 
 		if (user == null) {
 			return new ResponseEntity(new CustomErrorType("Unable to delete. Produto with id " + id + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
-		produtoService.deleteProductById(id);
+		productService.deleteProductById(id);
 		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
 	}
 
 	@RequestMapping(value = "/produto/{id}/lote", method = RequestMethod.POST)
-	public ResponseEntity<?> criarLote(@PathVariable("id") long produtoId, @RequestBody LotDTO loteDTO) {
-		Product product = produtoService.findById(produtoId);
+	public ResponseEntity<?> createLot(@PathVariable("id") long produtoId, @RequestBody LotDTO loteDTO) {
+		Product product = productService.findById(produtoId);
 
 		if (product == null) {
 			return new ResponseEntity(
@@ -171,14 +171,14 @@ public class RestApiController {
 					HttpStatus.NOT_FOUND);
 		}
 
-		Lot lote = loteService.saveLot(new Lot(product, loteDTO.getAmountItems(), loteDTO.getExpirationDate()));
+		Lot lote = lotService.saveLot(new Lot(product, loteDTO.getAmountItems(), loteDTO.getExpirationDate()));
 
 		try {
 			if (product.getSituation() instanceof Unavailable) {
 				if (loteDTO.getAmountItems() > 0) {
 					Product produtoDisponivel = product;
 					produtoDisponivel.situation = new Available();
-					produtoService.updateProduct(produtoDisponivel);
+					productService.updateProduct(produtoDisponivel);
 				}
 			}
 		} catch (ObjetoInvalidoException e) {
@@ -189,8 +189,8 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/lote/", method = RequestMethod.GET)
-	public ResponseEntity<List<Lot>> listAllLotess() {
-		List<Lot> lotes = loteService.findAllLots();
+	public ResponseEntity<List<Lot>> listAllLots() {
+		List<Lot> lotes = lotService.findAllLots();
 
 		if (lotes.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
