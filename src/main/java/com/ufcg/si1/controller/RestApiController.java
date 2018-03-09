@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.ufcg.si1.model.DTO.LoteDTO;
+import com.ufcg.si1.model.DTO.LotDTO;
 import com.ufcg.si1.model.situation.Available;
 import com.ufcg.si1.model.situation.Situation;
 import com.ufcg.si1.model.situation.Unavailable;
@@ -162,7 +162,7 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/produto/{id}/lote", method = RequestMethod.POST)
-	public ResponseEntity<?> criarLote(@PathVariable("id") long produtoId, @RequestBody LoteDTO loteDTO) {
+	public ResponseEntity<?> criarLote(@PathVariable("id") long produtoId, @RequestBody LotDTO loteDTO) {
 		Product product = produtoService.findById(produtoId);
 
 		if (product == null) {
@@ -171,11 +171,11 @@ public class RestApiController {
 					HttpStatus.NOT_FOUND);
 		}
 
-		Lot lote = loteService.saveLot(new Lot(product, loteDTO.getNumeroDeItens(), loteDTO.getDataDeValidade()));
+		Lot lote = loteService.saveLot(new Lot(product, loteDTO.getAmountItems(), loteDTO.getExpirationDate()));
 
 		try {
 			if (product.getSituation() instanceof Unavailable) {
-				if (loteDTO.getNumeroDeItens() > 0) {
+				if (loteDTO.getAmountItems() > 0) {
 					Product produtoDisponivel = product;
 					produtoDisponivel.situation = new Available();
 					produtoService.updateProduct(produtoDisponivel);
