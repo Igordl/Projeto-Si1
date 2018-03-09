@@ -1,8 +1,8 @@
 package exceptions;
 
-public class ObjetoInexistenteException extends Exception {
+public class InvalidObjectException extends Exception {
 
-	public ObjetoInexistenteException(String erro) {
+	public InvalidObjectException(String erro) {
 		super("ExcecaoDados: " + erro);
 	}
 }

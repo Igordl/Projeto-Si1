@@ -1,8 +1,8 @@
 package exceptions;
 
-public class ObjetoJaExistenteException extends Exception {
+public class ObjectAlreadyExistsException extends Exception {
 
-	public ObjetoJaExistenteException(String erro) {
+	public ObjectAlreadyExistsException(String erro) {
 		super("ExcecaoDados: " + erro);
 	}
 }

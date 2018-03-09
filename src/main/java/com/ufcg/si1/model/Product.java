@@ -7,7 +7,7 @@ import com.ufcg.si1.model.situation.Available;
 import com.ufcg.si1.model.situation.Situation;
 import com.ufcg.si1.model.situation.Unavailable;
 
-import exceptions.ObjetoInvalidoException;
+import exceptions.InvalidObjectException;
 
 public class Product {
 
@@ -112,7 +112,7 @@ public class Product {
 		this.category = category;
 	}
 
-	public Situation getSituation() throws ObjetoInvalidoException {
+	public Situation getSituation() throws InvalidObjectException {
 		return this.situation;
 	}
 
@@ -122,11 +122,11 @@ public class Product {
 	
 	//houve modificações neste metodo afim de retirar os bad smells
 	// implementando a oitava user story
-	public void mudaSituacao() throws ObjetoInvalidoException {
+	public void changeSituation() throws InvalidObjectException {
 		if(available.containsProduct()){
 			this.setSituation(situation);
 		}else{
-			throw new ObjetoInvalidoException("Situacao Invalida");
+			throw new InvalidObjectException("Situacao Invalida");
 		}
 	}
 

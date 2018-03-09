@@ -30,7 +30,7 @@ import com.ufcg.si1.service.SaleService;
 import com.ufcg.si1.service.SaleServiceImpl;
 import com.ufcg.si1.util.CustomErrorType;
 
-import exceptions.ObjetoInvalidoException;
+import exceptions.InvalidObjectException;
 
 @RestController
 @RequestMapping("/api")
@@ -45,19 +45,19 @@ public class RestApiController {
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> listAllUsers() {
-		List<Product> produtos = productService.findAllProducts();
+		List<Product> products = productService.findAllProducts();
 
-		if (produtos.isEmpty()) {
+		if (products.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
 		}
-		return new ResponseEntity<List<Product>>(produtos, HttpStatus.OK);
+		return new ResponseEntity<List<Product>>(products, HttpStatus.OK);
 	}
 
 	// ----------------- Criar um Produto ----------------
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.POST)
-	public ResponseEntity<?> createProduct(@RequestBody Product produto, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<?> createProduct(@RequestBody Product product, UriComponentsBuilder ucBuilder) {
 
 	/*	boolean produtoExiste = false;
 
@@ -68,24 +68,24 @@ public class RestApiController {
 		}
 
 */
-		if (productExists(produto)) {
-			return new ResponseEntity(new CustomErrorType("O produto " + produto.getName() + " do fabricante "
-					+ produto.getManufacturer() + " ja esta cadastrado!"), HttpStatus.CONFLICT);
+		if (productExists(product)) {
+			return new ResponseEntity(new CustomErrorType("O produto " + product.getName() + " do fabricante "
+					+ product.getManufacturer() + " ja esta cadastrado!"), HttpStatus.CONFLICT);
 		}
 
 		try {
-			produto.mudaSituacao();
-		} catch (ObjetoInvalidoException e) {
-			return new ResponseEntity(new CustomErrorType("Error: Produto" + produto.getName() + " do fabricante "
-					+ produto.getManufacturer() + " alguma coisa errada aconteceu!"), HttpStatus.NOT_ACCEPTABLE);
+			product.changeSituation();
+		} catch (InvalidObjectException e) {
+			return new ResponseEntity(new CustomErrorType("Error: Produto" + product.getName() + " do fabricante "
+					+ product.getManufacturer() + " alguma coisa errada aconteceu!"), HttpStatus.NOT_ACCEPTABLE);
 		}
 
-		productService.saveProduct(produto);
+		productService.saveProduct(product);
 
 		// HttpHeaders headers = new HttpHeaders();
 		// headers.setLocation(ucBuilder.path("/api/produto/{id}").buildAndExpand(produto.getId()).toUri());
 
-		return new ResponseEntity<Product>(produto, HttpStatus.CREATED);
+		return new ResponseEntity<Product>(product, HttpStatus.CREATED);
 	}
 	
 	//usando o extract method para verificar se o produto existe
@@ -181,7 +181,7 @@ public class RestApiController {
 					productService.updateProduct(produtoDisponivel);
 				}
 			}
-		} catch (ObjetoInvalidoException e) {
+		} catch (InvalidObjectException e) {
 			e.printStackTrace();
 		}
 
