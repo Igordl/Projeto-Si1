@@ -22,10 +22,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.ufcg.si1.model.Product;
 import com.ufcg.si1.model.Sale;
-import com.ufcg.si1.service.LoteService;
-import com.ufcg.si1.service.LoteServiceImpl;
-import com.ufcg.si1.service.ProdutoService;
-import com.ufcg.si1.service.ProdutoServiceImpl;
+import com.ufcg.si1.service.LotService;
+import com.ufcg.si1.service.LotServiceImpl;
+import com.ufcg.si1.service.ProductService;
+import com.ufcg.si1.service.ProductServiceImpl;
 import com.ufcg.si1.service.SaleService;
 import com.ufcg.si1.service.SaleServiceImpl;
 import com.ufcg.si1.util.CustomErrorType;
@@ -37,15 +37,15 @@ import exceptions.ObjetoInvalidoException;
 @CrossOrigin
 public class RestApiController {
 
-	ProdutoService produtoService = new ProdutoServiceImpl();
-	LoteService loteService = new LoteServiceImpl();
+	ProductService produtoService = new ProductServiceImpl();
+	LotService loteService = new LotServiceImpl();
 	SaleService saleService = new SaleServiceImpl();
 
 	// ------------Retrieve All Products---------------
 
 	@RequestMapping(value = "/produto/", method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> listAllUsers() {
-		List<Product> produtos = produtoService.findAllProdutos();
+		List<Product> produtos = produtoService.findAllProducts();
 
 		if (produtos.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -80,7 +80,7 @@ public class RestApiController {
 					+ produto.getManufacturer() + " alguma coisa errada aconteceu!"), HttpStatus.NOT_ACCEPTABLE);
 		}
 
-		produtoService.saveProduto(produto);
+		produtoService.saveProduct(produto);
 
 		// HttpHeaders headers = new HttpHeaders();
 		// headers.setLocation(ucBuilder.path("/api/produto/{id}").buildAndExpand(produto.getId()).toUri());
@@ -92,7 +92,7 @@ public class RestApiController {
 	private boolean produtoExiste(Product produto) {
 		boolean produtoExiste = false;
 
-		for (Product p : produtoService.findAllProdutos()) {
+		for (Product p : produtoService.findAllProducts()) {
 			if (p.getBarcode().equals(produto.getBarcode())) {
 				produtoExiste = true;
 			}
@@ -132,14 +132,14 @@ public class RestApiController {
 		// resolvi criar um servi�o na API s� para mudar a situa��o do produto
 		
 
-		produtoService.updateProduto(currentProduto);
+		produtoService.updateProduct(currentProduto);
 		return new ResponseEntity<Product>(currentProduto, HttpStatus.OK);
 	}
 	
 	private Product procuraPeloId(long id) {
 		Product currentProduto = null;
 
-		for (Product p : produtoService.findAllProdutos()) {
+		for (Product p : produtoService.findAllProducts()) {
 			if (p.getId() == id) {
 				currentProduto = p;
 			}
@@ -157,7 +157,7 @@ public class RestApiController {
 			return new ResponseEntity(new CustomErrorType("Unable to delete. Produto with id " + id + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
-		produtoService.deleteProdutoById(id);
+		produtoService.deleteProductById(id);
 		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
 	}
 
@@ -171,14 +171,14 @@ public class RestApiController {
 					HttpStatus.NOT_FOUND);
 		}
 
-		Lot lote = loteService.saveLote(new Lot(product, loteDTO.getNumeroDeItens(), loteDTO.getDataDeValidade()));
+		Lot lote = loteService.saveLot(new Lot(product, loteDTO.getNumeroDeItens(), loteDTO.getDataDeValidade()));
 
 		try {
 			if (product.getSituation() instanceof Indisponivel) {
 				if (loteDTO.getNumeroDeItens() > 0) {
 					Product produtoDisponivel = product;
 					produtoDisponivel.situation = new Disponivel();
-					produtoService.updateProduto(produtoDisponivel);
+					produtoService.updateProduct(produtoDisponivel);
 				}
 			}
 		} catch (ObjetoInvalidoException e) {
@@ -190,7 +190,7 @@ public class RestApiController {
 
 	@RequestMapping(value = "/lote/", method = RequestMethod.GET)
 	public ResponseEntity<List<Lot>> listAllLotess() {
-		List<Lot> lotes = loteService.findAllLotes();
+		List<Lot> lotes = loteService.findAllLots();
 
 		if (lotes.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

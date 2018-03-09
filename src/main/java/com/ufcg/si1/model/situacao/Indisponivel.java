@@ -1,10 +1,10 @@
 package com.ufcg.si1.model.situacao;
 
-import com.ufcg.si1.service.ProdutoServiceImpl;
+import com.ufcg.si1.service.ProductServiceImpl;
 
 public class Indisponivel implements Situacao{
 	
-private ProdutoServiceImpl produto;
+private ProductServiceImpl produto;
 	
 	public boolean containsProduto(){
 		if(produto.size() == 0){

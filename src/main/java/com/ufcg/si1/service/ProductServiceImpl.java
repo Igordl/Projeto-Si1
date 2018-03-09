@@ -15,23 +15,23 @@ import com.ufcg.si1.model.Lot;
 import com.ufcg.si1.model.Product;
 
 @Service("produtoService")
-public class ProdutoServiceImpl implements ProdutoService {
+public class ProductServiceImpl implements ProductService {
 
 	private static final AtomicLong counter = new AtomicLong();
 
-	private static List<Product> produtos;
+	private static List<Product> products;
 
-	private static List<Lot> lotes;
+	private static List<Lot> lots;
 
-	private static List<Product> vencidos;
+	private static List<Product> expiredProducts;
 
 	static {
-		produtos = populateDummyProdutos();
-		lotes = new ArrayList<>();
-		vencidos = new ArrayList<>();
+		products = populateDummyProducts();
+		lots = new ArrayList<>();
+		expiredProducts = new ArrayList<>();
 	}
 
-	private static List<Product> populateDummyProdutos() {
+	private static List<Product> populateDummyProducts() {
 		List<Product> produtos = new ArrayList<Product>();
 
 		produtos.add(new Product(counter.incrementAndGet(), "Leite Integral", "87654321-B", "Parmalat", "Mercearia"));
@@ -43,23 +43,23 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return produtos;
 	}
 
-	public List<Product> findAllProdutos() {
-		return produtos;
+	public List<Product> findAllProducts() {
+		return products;
 	}
 
-	public void saveProduto(Product produto) {
+	public void saveProduct(Product produto) {
 		produto.setId(counter.incrementAndGet());
-		produtos.add(produto);
+		products.add(produto);
 	}
 
-	public void updateProduto(Product produto) {
-		int index = produtos.indexOf(produto);
-		produtos.set(index, produto);
+	public void updateProduct(Product produto) {
+		int index = products.indexOf(produto);
+		products.set(index, produto);
 	}
 
-	public void deleteProdutoById(long id) {
+	public void deleteProductById(long id) {
 
-		for (Iterator<Product> iterator = produtos.iterator(); iterator.hasNext();) {
+		for (Iterator<Product> iterator = products.iterator(); iterator.hasNext();) {
 			Product p = iterator.next();
 			if (p.getId() == id) {
 				iterator.remove();
@@ -70,19 +70,19 @@ public class ProdutoServiceImpl implements ProdutoService {
 	// este metodo nao estava sendo utilizado mas agora utiliza-se ele nas classes Disponiveis e Indisponiveis
 	
 	public int size() {
-		return produtos.size();
+		return products.size();
 	}
 
 	public Iterator<Product> getIterator() {
-		return produtos.iterator();
+		return products.iterator();
 	}
 
 	public void deleteAllUsers() {
-		produtos.clear();
+		products.clear();
 	}
 	
 	public Product findById(long id) {
-		for (Product produto : produtos) {
+		for (Product produto : products) {
 			if (produto.getId() == id) {
 				return produto;
 			}
@@ -90,8 +90,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return null;
 	}
 
-	public boolean doesProdutoExist(Product produto) {
-		for (Product p : produtos) {
+	public boolean doesProductExist(Product produto) {
+		for (Product p : products) {
 			if (p.getBarcode().equals(produto.getBarcode())) {
 				return true;
 			}
@@ -99,9 +99,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 		return false;
 	}
 
-	public Lot saveLote(Lot lote) {
+	public Lot saveLot(Lot lote) {
 		lote.setId(counter.incrementAndGet());
-		lotes.add(lote);
+		lots.add(lote);
 
 		return lote;
 	}
@@ -110,16 +110,16 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	// comparando a data atual com a data de validade do produto para saber se ta
 	// vencido
-	public void verificaValidade() throws ParseException {
+	public void checkValidity() throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		for (Lot lote : lotes) {
+		for (Lot lote : lots) {
 			Date data = new Date(format.parse(lote.getExpirationDate()).getTime());
 			Date dataAtual = new Date(format.parse(getDateTime()).getTime());
 			
 			if (data.after(dataAtual)) {
 				// se o produto ta vencido ele passa a ser indisponivel
 				lote.getProduct().setSituation(lote.getProduct().unavailable);
-				vencidos.add(lote.getProduct());
+				expiredProducts.add(lote.getProduct());
 			}
 		}
 		

@@ -9,27 +9,27 @@ import com.ufcg.si1.model.Lot;
 import org.springframework.stereotype.Service;
 
 @Service("loteService")
-public class LoteServiceImpl implements LoteService {
+public class LotServiceImpl implements LotService {
 
 	private static final AtomicLong counter = new AtomicLong();
 
-	private static List<Lot> lotes;
+	private static List<Lot> lots;
 
 	static {
-		lotes = new ArrayList<>();
+		lots = new ArrayList<>();
 	}
 
 	@Override
-	public Lot saveLote(Lot lote) {
+	public Lot saveLot(Lot lote) {
 		lote.setId(counter.incrementAndGet());
-		lotes.add(lote);
+		lots.add(lote);
 
 		return lote;
 	}
 
 	@Override
 	public Lot findById(long id) {
-		for (Lot lote : lotes) {
+		for (Lot lote : lots) {
 			if (lote.getId() == id) {
 				return lote;
 			}
@@ -38,15 +38,15 @@ public class LoteServiceImpl implements LoteService {
 	}
 
 	@Override
-	public void updateProduto(Lot lote) {
-		int index = lotes.indexOf(lote);
-		lotes.set(index, lote);
+	public void updateProduct(Lot lote) {
+		int index = lots.indexOf(lote);
+		lots.set(index, lote);
 
 	}
 
 	@Override
-	public void deleteLoteById(long id) {
-		for (Iterator<Lot> iterator = lotes.iterator(); iterator.hasNext();) {
+	public void deleteLotById(long id) {
+		for (Iterator<Lot> iterator = lots.iterator(); iterator.hasNext();) {
 			Lot lote = iterator.next();
 			if (lote.getId() == id) {
 				iterator.remove();
@@ -55,13 +55,13 @@ public class LoteServiceImpl implements LoteService {
 	}
 
 	@Override
-	public List<Lot> findAllLotes() {
-		return lotes;
+	public List<Lot> findAllLots() {
+		return lots;
 	}
 
 	@Override
 	public int size() {
-		return lotes.size();
+		return lots.size();
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class LoteServiceImpl implements LoteService {
 		return null;
 	}
 	
-	public void geraRelatorio() {
-		List<Lot> lotes = findAllLotes();
+	public void getReport() {
+		List<Lot> lotes = findAllLots();
 		String relatorio = null;
 		for (Iterator<Lot> iterator = lotes.iterator(); iterator.hasNext();) {
 			Lot lote = iterator.next();

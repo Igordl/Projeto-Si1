@@ -5,19 +5,19 @@ import java.util.List;
 
 import com.ufcg.si1.model.Lot;
 
-public interface LoteService {
+public interface LotService {
 
-	List<Lot> findAllLotes();
+	List<Lot> findAllLots();
 
 	Lot findById(long id);
 
-	void updateProduto(Lot user);
+	void updateProduct(Lot user);
 
-	void deleteLoteById(long id);
+	void deleteLotById(long id);
 
 	int size();
 
 	Iterator<Lot> getIterator();
 
-	Lot saveLote(Lot lote);
+	Lot saveLot(Lot lote);
 }
