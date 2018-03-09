@@ -23,3 +23,40 @@ Reconhecendo Bad Smells
 	public int size() {
 		return produtos.size();
 	}
+
+Mudanças no controller
+
+4- Usando o extract method removi do método criarProduto no controller essa parte de código
+
+boolean produtoExiste = false;
+
+		for (Product p : produtoService.findAllProdutos()) {
+			if (p.getBarcode().equals(produto.getBarcode())) {
+				produtoExiste = true;
+			}
+		}
+
+Criei o método produtoExiste.
+
+5- Usando o extract method removi dos métodos consultarProduto, updateProduto e deleteUser a seguinte parte de código. Acabando, dessa forma, com a duplicação de código. 
+
+Product p = null;
+
+		for (Product produto : produtoService.findAllProdutos()) {
+			if (produto.getId() == id) {
+				p = produto;
+			}
+		}
+
+Criei o método procuraPeloId.
+
+6- Removendo código comentado
+
+// esse c�digo n�o precisa mais
+		// try {
+		// currentProduto.mudaSituacao(produto.pegaSituacao());
+		// } catch (ObjetoInvalidoException e) {
+		// return new ResponseEntity(new CustomErrorType("Unable to upate. Produto with
+		// id " + id + " invalid."),
+		// HttpStatus.NOT_FOUND);
+		// }
