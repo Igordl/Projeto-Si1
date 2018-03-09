@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.ufcg.si1.model.DTO.LoteDTO;
-import com.ufcg.si1.model.situacao.Situacao;
-import com.ufcg.si1.model.situacao.Disponivel;
-import com.ufcg.si1.model.situacao.Indisponivel;
+import com.ufcg.si1.model.situation.Available;
+import com.ufcg.si1.model.situation.Situation;
+import com.ufcg.si1.model.situation.Unavailable;
 import com.ufcg.si1.model.Lot;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -174,10 +174,10 @@ public class RestApiController {
 		Lot lote = loteService.saveLot(new Lot(product, loteDTO.getNumeroDeItens(), loteDTO.getDataDeValidade()));
 
 		try {
-			if (product.getSituation() instanceof Indisponivel) {
+			if (product.getSituation() instanceof Unavailable) {
 				if (loteDTO.getNumeroDeItens() > 0) {
 					Product produtoDisponivel = product;
-					produtoDisponivel.situation = new Disponivel();
+					produtoDisponivel.situation = new Available();
 					produtoService.updateProduct(produtoDisponivel);
 				}
 			}

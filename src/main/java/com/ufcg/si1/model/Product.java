@@ -3,9 +3,9 @@ package com.ufcg.si1.model;
 import java.math.BigDecimal;
 
 import com.ufcg.si1.model.descontos.Descontos;
-import com.ufcg.si1.model.situacao.Disponivel;
-import com.ufcg.si1.model.situacao.Indisponivel;
-import com.ufcg.si1.model.situacao.Situacao;
+import com.ufcg.si1.model.situation.Available;
+import com.ufcg.si1.model.situation.Situation;
+import com.ufcg.si1.model.situation.Unavailable;
 
 import exceptions.ObjetoInvalidoException;
 
@@ -25,11 +25,11 @@ public class Product {
 
 	private String category;
 
-	public Situacao situation;
+	public Situation situation;
 	
-	public Disponivel available;
+	public Available available;
 	
-	public Indisponivel unavailable;
+	public Unavailable unavailable;
 	
 	// reconhecendo bad smells
 	
@@ -112,18 +112,18 @@ public class Product {
 		this.category = category;
 	}
 
-	public Situacao getSituation() throws ObjetoInvalidoException {
+	public Situation getSituation() throws ObjetoInvalidoException {
 		return this.situation;
 	}
 
-	public void setSituation(Situacao situacion) {
+	public void setSituation(Situation situacion) {
 		this.situation = situacion;
 	}
 	
 	//houve modificações neste metodo afim de retirar os bad smells
 	// implementando a oitava user story
 	public void mudaSituacao() throws ObjetoInvalidoException {
-		if(available.containsProduto()){
+		if(available.containsProduct()){
 			this.setSituation(situation);
 		}else{
 			throw new ObjetoInvalidoException("Situacao Invalida");
