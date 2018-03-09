@@ -2,7 +2,7 @@ package com.ufcg.si1.model;
 
 import java.math.BigDecimal;
 
-import com.ufcg.si1.model.descontos.Descontos;
+import com.ufcg.si1.model.discounts.Discounts;
 import com.ufcg.si1.model.situation.Available;
 import com.ufcg.si1.model.situation.Situation;
 import com.ufcg.si1.model.situation.Unavailable;
@@ -73,7 +73,7 @@ public class Product {
 	}
 	
 	// implementando a sexta user story
-	public void discountPrice(Descontos discount){
+	public void discountPrice(Discounts discount){
 		if(hasDiscount){
 			BigDecimal total = price.subtract((BigDecimal) discount);
 			this.setPreco(total);
