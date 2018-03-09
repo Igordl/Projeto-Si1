@@ -68,7 +68,7 @@ public class Product {
 		return price;
 	}
 
-	public void setPreco(BigDecimal price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 	
@@ -76,7 +76,7 @@ public class Product {
 	public void discountPrice(Discounts discount){
 		if(hasDiscount){
 			BigDecimal total = price.subtract((BigDecimal) discount);
-			this.setPreco(total);
+			this.setPrice(total);
 		}
 	}
 	

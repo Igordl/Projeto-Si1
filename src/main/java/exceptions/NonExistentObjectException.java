@@ -2,8 +2,8 @@ package exceptions;
 
 public class NonExistentObjectException extends Exception {
 
-	public NonExistentObjectException(String erro) {
-		super("ExcecaoDados: " + erro);
+	public NonExistentObjectException(String error) {
+		super("ExcecaoDados: " + error);
 	}
 }
 

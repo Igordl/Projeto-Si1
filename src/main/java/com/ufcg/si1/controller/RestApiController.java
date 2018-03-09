@@ -89,15 +89,15 @@ public class RestApiController {
 	}
 	
 	//usando o extract method para verificar se o produto existe
-	private boolean productExists(Product produto) {
-		boolean produtoExiste = false;
+	private boolean productExists(Product product) {
+		boolean productExists = false;
 
 		for (Product p : productService.findAllProducts()) {
-			if (p.getBarcode().equals(produto.getBarcode())) {
-				produtoExiste = true;
+			if (p.getBarcode().equals(product.getBarcode())) {
+				productExists = true;
 			}
 		}
-		return produtoExiste;
+		return productExists;
 	}
 	
 
@@ -114,26 +114,26 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/produto/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateProduct(@PathVariable("id") long id, @RequestBody Product produto) {
+	public ResponseEntity<?> updateProduct(@PathVariable("id") long id, @RequestBody Product product) {
 
-		Product currentProduto = searchById(id);
+		Product currentProduct = searchById(id);
 
-		if (currentProduto == null) {
+		if (currentProduct == null) {
 			return new ResponseEntity(new CustomErrorType("Unable to upate. Produto with id " + id + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
 
-		currentProduto.setName(produto.getName());
-		currentProduto.setPreco(produto.getPrice());
-		currentProduto.setBarcode(produto.getBarcode());
-		currentProduto.setManufacturer(produto.getManufacturer());
-		currentProduto.setCategory(produto.getCategory());
+		currentProduct.setName(product.getName());
+		currentProduct.setPrice(product.getPrice());
+		currentProduct.setBarcode(product.getBarcode());
+		currentProduct.setManufacturer(product.getManufacturer());
+		currentProduct.setCategory(product.getCategory());
 
 		// resolvi criar um servi�o na API s� para mudar a situa��o do produto
 		
 
-		productService.updateProduct(currentProduto);
-		return new ResponseEntity<Product>(currentProduto, HttpStatus.OK);
+		productService.updateProduct(currentProduct);
+		return new ResponseEntity<Product>(currentProduct, HttpStatus.OK);
 	}
 	
 	private Product searchById(long id) {
@@ -162,41 +162,41 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/produto/{id}/lote", method = RequestMethod.POST)
-	public ResponseEntity<?> createLot(@PathVariable("id") long produtoId, @RequestBody LotDTO loteDTO) {
-		Product product = productService.findById(produtoId);
+	public ResponseEntity<?> createLot(@PathVariable("id") long productId, @RequestBody LotDTO lotDTO) {
+		Product product = productService.findById(productId);
 
 		if (product == null) {
 			return new ResponseEntity(
-					new CustomErrorType("Unable to create lote. Produto with id " + produtoId + " not found."),
+					new CustomErrorType("Unable to create lote. Produto with id " + productId + " not found."),
 					HttpStatus.NOT_FOUND);
 		}
 
-		Lot lote = lotService.saveLot(new Lot(product, loteDTO.getAmountItems(), loteDTO.getExpirationDate()));
+		Lot lot = lotService.saveLot(new Lot(product, lotDTO.getAmountItems(), lotDTO.getExpirationDate()));
 
 		try {
 			if (product.getSituation() instanceof Unavailable) {
-				if (loteDTO.getAmountItems() > 0) {
-					Product produtoDisponivel = product;
-					produtoDisponivel.situation = new Available();
-					productService.updateProduct(produtoDisponivel);
+				if (lotDTO.getAmountItems() > 0) {
+					Product productAvailable = product;
+					productAvailable.situation = new Available();
+					productService.updateProduct(productAvailable);
 				}
 			}
 		} catch (InvalidObjectException e) {
 			e.printStackTrace();
 		}
 
-		return new ResponseEntity<>(lote, HttpStatus.CREATED);
+		return new ResponseEntity<>(lot, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/lote/", method = RequestMethod.GET)
 	public ResponseEntity<List<Lot>> listAllLots() {
-		List<Lot> lotes = lotService.findAllLots();
+		List<Lot> lots = lotService.findAllLots();
 
-		if (lotes.isEmpty()) {
+		if (lots.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
 		}
-		return new ResponseEntity<List<Lot>>(lotes, HttpStatus.OK);
+		return new ResponseEntity<List<Lot>>(lots, HttpStatus.OK);
 	}
 	
 	
@@ -206,12 +206,12 @@ public class RestApiController {
 	
 	@RequestMapping(value = "/sale/", method = RequestMethod.GET)
 	public ResponseEntity<List<Sale>> listAllSales() {
-		List<Sale> vendas = saleService.findAllSales();
+		List<Sale> sales = saleService.findAllSales();
 
-		if (vendas.isEmpty()) {
+		if (sales.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			// You many decide to return HttpStatus.NOT_FOUND
 		}
-		return new ResponseEntity<List<Sale>>(vendas, HttpStatus.OK);
+		return new ResponseEntity<List<Sale>>(sales, HttpStatus.OK);
 	}
 }

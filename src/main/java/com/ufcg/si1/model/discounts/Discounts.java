@@ -5,5 +5,5 @@ import com.ufcg.si1.model.Product;
 
 public interface Discounts {
 	
-	public BigDecimal calculateDiscount(Product produto);
+	public BigDecimal calculateDiscount(Product product);
 }

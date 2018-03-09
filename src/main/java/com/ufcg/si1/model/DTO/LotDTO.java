@@ -8,25 +8,25 @@ public class LotDTO {
     public LotDTO() {
     }
 
-    public LotDTO(int numeroDeItens, String dataDeValidade) {
+    public LotDTO(int amountItems, String expirationDate) {
         super();
-        this.amountItems = numeroDeItens;
-        this.expirationDate = dataDeValidade;
+        this.amountItems = amountItems;
+        this.expirationDate = expirationDate;
     }
 
     public int getAmountItems() {
         return amountItems;
     }
 
-    public void setAmountItems(int numeroDeItens) {
-        this.amountItems = numeroDeItens;
+    public void setAmountItems(int amountItems) {
+        this.amountItems = amountItems;
     }
 
     public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String dataDeValidade) {
-        this.expirationDate = dataDeValidade;
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 }

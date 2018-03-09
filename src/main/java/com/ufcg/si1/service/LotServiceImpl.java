@@ -20,35 +20,35 @@ public class LotServiceImpl implements LotService {
 	}
 
 	@Override
-	public Lot saveLot(Lot lote) {
-		lote.setId(counter.incrementAndGet());
-		lots.add(lote);
+	public Lot saveLot(Lot lot) {
+		lot.setId(counter.incrementAndGet());
+		lots.add(lot);
 
-		return lote;
+		return lot;
 	}
 
 	@Override
 	public Lot findById(long id) {
-		for (Lot lote : lots) {
-			if (lote.getId() == id) {
-				return lote;
+		for (Lot lot : lots) {
+			if (lot.getId() == id) {
+				return lot;
 			}
 		}
 		return null;
 	}
 
 	@Override
-	public void updateProduct(Lot lote) {
-		int index = lots.indexOf(lote);
-		lots.set(index, lote);
+	public void updateProduct(Lot lot) {
+		int index = lots.indexOf(lot);
+		lots.set(index, lot);
 
 	}
 
 	@Override
 	public void deleteLotById(long id) {
 		for (Iterator<Lot> iterator = lots.iterator(); iterator.hasNext();) {
-			Lot lote = iterator.next();
-			if (lote.getId() == id) {
+			Lot lot = iterator.next();
+			if (lot.getId() == id) {
 				iterator.remove();
 			}
 		}
@@ -70,11 +70,11 @@ public class LotServiceImpl implements LotService {
 	}
 	
 	public void getReport() {
-		List<Lot> lotes = findAllLots();
-		String relatorio = null;
-		for (Iterator<Lot> iterator = lotes.iterator(); iterator.hasNext();) {
-			Lot lote = iterator.next();
-			relatorio += lote.toString() + "/n";
+		List<Lot> lots = findAllLots();
+		String report = null;
+		for (Iterator<Lot> iterator = lots.iterator(); iterator.hasNext();) {
+			Lot lot = iterator.next();
+			report += lot.toString() + "/n";
 		}
 	}
 }

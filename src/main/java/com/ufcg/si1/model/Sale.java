@@ -10,16 +10,16 @@ public class Sale {
 	
 	private Date data;
 	
-	private List<ItemSale> itensVenda;
+	private List<ItemSale> itemsSale;
 	
-	public Sale (List<ItemSale> itensVenda) {
-		this.itensVenda = itensVenda;
+	public Sale (List<ItemSale> itemsSale) {
+		this.itemsSale = itemsSale;
 	}
 	
 	public double totalSalePrice() {
 		double total = 0;
-		for (ItemSale itemVenda : itensVenda) {
-			total += itemVenda.TotalItemSale();
+		for (ItemSale itemSale : itemsSale) {
+			total += itemSale.TotalItemSale();
 		}
 		return total;
 	}
@@ -41,11 +41,11 @@ public class Sale {
 	}
 
 	public List<ItemSale> getItensVenda() {
-		return itensVenda;
+		return itemsSale;
 	}
 
-	public void setItensVenda(List<ItemSale> itensVenda) {
-		this.itensVenda = itensVenda;
+	public void setItensVenda(List<ItemSale> itemsSale) {
+		this.itemsSale = itemsSale;
 	}
 	
 	

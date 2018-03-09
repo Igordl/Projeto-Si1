@@ -2,8 +2,8 @@ package exceptions;
 
 public class InvalidObjectException extends Exception {
 
-	public InvalidObjectException(String erro) {
-		super("ExcecaoDados: " + erro);
+	public InvalidObjectException(String error) {
+		super("ExcecaoDados: " + error);
 	}
 }
 

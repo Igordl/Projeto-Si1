@@ -47,14 +47,14 @@ public class ProductServiceImpl implements ProductService {
 		return products;
 	}
 
-	public void saveProduct(Product produto) {
-		produto.setId(counter.incrementAndGet());
-		products.add(produto);
+	public void saveProduct(Product product) {
+		product.setId(counter.incrementAndGet());
+		products.add(product);
 	}
 
-	public void updateProduct(Product produto) {
-		int index = products.indexOf(produto);
-		products.set(index, produto);
+	public void updateProduct(Product product) {
+		int index = products.indexOf(product);
+		products.set(index, product);
 	}
 
 	public void deleteProductById(long id) {
@@ -90,20 +90,20 @@ public class ProductServiceImpl implements ProductService {
 		return null;
 	}
 
-	public boolean doesProductExist(Product produto) {
+	public boolean doesProductExist(Product product) {
 		for (Product p : products) {
-			if (p.getBarcode().equals(produto.getBarcode())) {
+			if (p.getBarcode().equals(product.getBarcode())) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public Lot saveLot(Lot lote) {
-		lote.setId(counter.incrementAndGet());
-		lots.add(lote);
+	public Lot saveLot(Lot lot) {
+		lot.setId(counter.incrementAndGet());
+		lots.add(lot);
 
-		return lote;
+		return lot;
 	}
 	
 	// implementando a nona user story
@@ -112,14 +112,14 @@ public class ProductServiceImpl implements ProductService {
 	// vencido
 	public void checkValidity() throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-		for (Lot lote : lots) {
-			Date data = new Date(format.parse(lote.getExpirationDate()).getTime());
+		for (Lot lot : lots) {
+			Date data = new Date(format.parse(lot.getExpirationDate()).getTime());
 			Date dataAtual = new Date(format.parse(getDateTime()).getTime());
 			
 			if (data.after(dataAtual)) {
 				// se o produto ta vencido ele passa a ser indisponivel
-				lote.getProduct().setSituation(lote.getProduct().unavailable);
-				expiredProducts.add(lote.getProduct());
+				lot.getProduct().setSituation(lot.getProduct().unavailable);
+				expiredProducts.add(lot.getProduct());
 			}
 		}
 		
